@@ -37,8 +37,6 @@ def rotateDecrypt(text):
     return result
 def charRandomizer(string):
     result = charSwaper(charSwaper(charSwaper(string, 2), 3), 5)
-    result = charSwaper(charSwaper(charSwaper(result, 2), 3), 5)
-    result = charSwaper(charSwaper(charSwaper(result, 2), 3), 5)
     return result
 
 def txtEncript(string):
@@ -47,6 +45,8 @@ def txtEncript(string):
     result = rotateEncrypt(result)
     return charRandomizer(result)
 
-
-s = "Nesto novo"
-print(txtEncript(s))
+def txtDecripton(string):
+    result = rotateDecrypt(string)
+    result = charSwaper(charSwaper(charSwaper(result, 5), 3), 2)
+    string = [result[i] for i in range(len(result) - 1, -1, -1)]
+    return "".join(string)
