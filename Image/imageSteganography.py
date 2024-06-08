@@ -31,7 +31,7 @@ class imageSteganography:
                         idx += 1
 
         # Saving modified image
-        cv2.imwrite("encoded_image.png", image)
+        cv2.imwrite(image_name + "Result.png", image)
         print("Secret data encoded successfully!")
 
     def extract_message_up_to_END(self, decoded_message):
@@ -63,3 +63,10 @@ class imageSteganography:
             textTransformer = TextTransformer()
             secret_message = textTransformer.txt_decrypt(self.extract_message_up_to_END(secret_message))
         return secret_message
+
+    def engine(self, filename, text, to_crypt, reverse):
+        if reverse is False:
+            self.encode(filename, text, to_crypt)
+        else:
+            self.decode(filename, to_crypt)
+        return True
