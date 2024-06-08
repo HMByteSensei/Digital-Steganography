@@ -134,9 +134,8 @@ class textSteganography:
 
         return result
 
-    def engine(self, filename, text, method, to_crypt):
+    def engine(self, filename, text, method, to_crypt, reverse):
         result = ""
-        reverse = False
         textTransform = TextTransformer()
         # print("--------TXT-------")
         # print(text)
@@ -148,8 +147,14 @@ class textSteganography:
         if to_crypt is True:
             text = text.upper()
             text = textTransform.rotate_encrypt(text)
-        print(text)
-        with open(filename + ".txt", "r") as file:
+        if reverse is True:
+            if method == "markingLetters" or method == 0:
+                method = "reverseMarkingLetters"
+            elif method == "uppercaseLetters" or method == 1:
+                method = "reverseUppercaseLetters"
+            else:
+                method = "reverseUppercaseBinaryLetters"
+        with open(filename, "r") as file:
             content = file.read()
             if method == "markingLetters" or method == 0 or method == "uppercaseLetters" or method == 1:
                 if self.contains_ordered_letters(content, text):
@@ -157,8 +162,7 @@ class textSteganography:
                         result = self.markingLetters(content, text)
                     elif method == "uppercaseLetters" or method == 1:
                         result = self.uppercaseLetters(content, text)
-                        print(result)
-                        print("HERER")
+                        # print(result)
                 else:
                     return False
             elif method == "uppercaseBinaryLetters" or method == 2:
