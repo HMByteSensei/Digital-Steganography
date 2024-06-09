@@ -79,17 +79,5 @@ def dct_extract(samples, length):
 # Example usage
 input_audio_path = "input_audio.wav"
 output_audio_path = "output_audio.wav"
-secret_message = "Nuclear"
 
-# Step 1: Load the audio file
-samples, sample_rate = load_audio(input_audio_path)
 
-# Step 2: Embed the secret message
-modified_samples = dct_embed(samples, secret_message)
-
-# Step 3: Save the modified audio file
-save_audio(modified_samples, sample_rate, output_audio_path)
-
-# Step 4: Extract the secret message from the modified audio file
-extracted_message = dct_extract(modified_samples, len(secret_message))
-print("Extracted message:", extracted_message)

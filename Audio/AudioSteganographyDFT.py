@@ -35,7 +35,7 @@ def binary_to_string(binary):
     print(f"Binary to string: {binary} -> '{result}'")
     return result
 
-def embed_string_in_audio(samples, secret_string):
+def dft_embed(samples, secret_string):
     binary_string = string_to_binary(secret_string)
     samples_copy = samples.copy()
 
@@ -56,7 +56,7 @@ def embed_string_in_audio(samples, secret_string):
     print(f"Number of modified samples: {len(samples_copy)}")
     return samples_copy
 
-def extract_string_from_audio(samples, length):
+def dft_extract(samples, length):
     binary_string = ''.join([str(samples[i] & 1) for i in range(length * 8)])
     binary_string = binary_string[:length * 8]
 
@@ -72,16 +72,4 @@ def extract_string_from_audio(samples, length):
 # Load input sound
 input_audio_path = "input_audio.wav"
 output_audio_path = "output_audio.wav"
-secret_message = "Nuclear"
 
-samples, sample_rate = load_audio(input_audio_path)
-
-# Embedding secret message into sound
-modified_samples = embed_string_in_audio(samples, secret_message)
-
-# Save modified sound
-save_audio(modified_samples, sample_rate, output_audio_path)
-
-# Extract secret message from modified sound
-extracted_message = extract_string_from_audio(modified_samples, len(secret_message))
-print("Extracted message:", extracted_message)

@@ -35,7 +35,7 @@ def binary_to_string(binary):
     print(f"Binary to string: {binary} -> '{result}'")
     return result
 
-def embed_string_in_audio(samples, sample_rate, secret_string):
+def lsb_embed(samples, sample_rate, secret_string):
     binary_string = string_to_binary(secret_string)
     samples_copy = samples.copy()
 
@@ -46,7 +46,7 @@ def embed_string_in_audio(samples, sample_rate, secret_string):
     print(f"Number of modified samples: {len(samples_copy)}")
     return samples_copy
 
-def extract_string_from_audio(samples, sample_rate, length):
+def lsb_extract(samples, sample_rate, length):
     binary_string = ''.join([str(samples[i] & 1) for i in range(length * 8)])
     binary_string = binary_string[:length * 8]
 
@@ -62,17 +62,4 @@ def extract_string_from_audio(samples, sample_rate, length):
 # Example usage
 input_audio_path = "input_audio.wav"
 output_audio_path = "output_audio.wav"
-secret_message = "Nuclear"
 
-# Step 1: Load the audio file
-samples, sample_rate = load_audio(input_audio_path)
-
-# Step 2: Embed the secret message
-modified_samples = embed_string_in_audio(samples, sample_rate, secret_message)
-
-# Step 3: Save the modified audio file
-save_audio(modified_samples, sample_rate, output_audio_path)
-
-# Step 4: Extract the secret message from the modified audio file
-extracted_message = extract_string_from_audio(modified_samples, sample_rate, len(secret_message))
-print("Extracted message:", extracted_message)
