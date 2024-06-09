@@ -5,7 +5,7 @@ import scipy.fftpack as fft
 from scipy.io import wavfile
 from pydub import AudioSegment
 from PyQt5.QtWidgets import QApplication, QWidget, QVBoxLayout, QHBoxLayout, QPushButton, QLabel, QComboBox, \
-    QFileDialog, QLineEdit, QSpacerItem, QSizePolicy, QCheckBox, QToolBar, QStackedWidget, QTabBar
+    QFileDialog, QLineEdit, QSpacerItem, QSizePolicy, QCheckBox, QToolBar, QStackedWidget, QTabBar, QFrame
 from PyQt5.QtMultimedia import QMediaPlayer, QMediaContent
 from PyQt5.QtCore import QUrl, Qt, QTimer
 import pyqtgraph as pg
@@ -44,21 +44,11 @@ class Audio_Embedding_GUI(QWidget):
         self.text_crypto = TextTransformer()  # Add TextTransformer
 
     def initUI(self):
-        self.setWindowTitle('Steganography App')
+        self.setWindowTitle('Steganography Tool')
         self.setGeometry(100, 100, 800, 600)
         self.setFixedSize(800, 600)
 
         layout = QVBoxLayout()
-
-        # Tab bar with mod options
-        self.tab_bar = QTabBar()
-        self.tab_bar.addTab("Text")
-        self.tab_bar.addTab("Image")
-        audio_index = self.tab_bar.addTab("Audio")
-        self.tab_bar.addTab("Video")
-        self.tab_bar.currentChanged.connect(self.changeMod)
-        self.tab_bar.setCurrentIndex(audio_index)
-        layout.addWidget(self.tab_bar)
 
         # Central widget for mod content
         self.central_widget = QStackedWidget()
@@ -166,6 +156,20 @@ class Audio_Embedding_GUI(QWidget):
         layout.addWidget(self.plot_widget)
 
         self.setLayout(layout)
+
+        # Add spacer item for spacing
+        spacer = QSpacerItem(20, 20, QSizePolicy.Minimum, QSizePolicy.Fixed)
+        layout.addItem(spacer)
+
+        # Horizontal line separator
+        line = QFrame()
+        line.setFrameShape(QFrame.HLine)
+        line.setFrameShadow(QFrame.Sunken)
+        layout.addWidget(line)
+
+        # Add spacer item for spacing
+        spacer = QSpacerItem(20, 20, QSizePolicy.Minimum, QSizePolicy.Fixed)
+        layout.addItem(spacer)
 
     def changeMod(self, index):
         mod = self.tab_bar.tabText(index)
