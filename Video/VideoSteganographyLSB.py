@@ -16,7 +16,8 @@ def load_video(file_path):
 def save_video(frames, output_path, fps):
     height, width, layers = frames[0].shape
     size = (width, height)
-    out = cv2.VideoWriter(output_path, cv2.VideoWriter_fourcc(*'XVID'), fps, size)
+    fourcc = cv2.VideoWriter_fourcc(*'FFV1')
+    out = cv2.VideoWriter(output_path, fourcc, fps, size)
     for frame in frames:
         out.write(frame)
     out.release()
@@ -61,19 +62,22 @@ def lsb_extract(frames):
     return binary_to_string(binary_string)
 
 # Example usage
-input_video_path = "input_video.avi"
-output_video_path = "output_video.avi"
-secret_message = "Nuclear"
+#input_video_path = "input_video.avi"
+#output_video_path = "output_video.avi"
+#secret_message = "Nuclear"
 
 # Step 1: Load the video file
-frames = load_video(input_video_path)
+#frames = load_video(input_video_path)
 
 # Step 2: Embed the secret message
-modified_frames = lsb_embed(frames, secret_message)
+#modified_frames = lsb_embed(frames, secret_message)
 
-# Step 3: Save the modified video file
-save_video(modified_frames, output_video_path, 30)
+# Step 3: Save the modified video file with FFV1 codec
+#save_video(modified_frames, output_video_path, 30)
 
-# Step 4: Extract the secret message from the modified video file
-extracted_message = lsb_extract(modified_frames)
-print("Extracted message:", extracted_message)
+# Step 4: Load the modified video file
+#modified_frames = load_video(output_video_path)
+
+# Step 5: Extract the secret message from the modified video file
+#extracted_message = lsb_extract(modified_frames)
+#print("Extracted message:", extracted_message)
