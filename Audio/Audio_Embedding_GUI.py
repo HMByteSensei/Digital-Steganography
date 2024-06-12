@@ -186,6 +186,9 @@ class Audio_Embedding_GUI(QWidget):
         self.position = 0
         self.playing = False
         self.player.stop()
+        self.message_input.clear()  # Clear the secret message input field
+        self.encrypt_checkbox.setChecked(False)  # Uncheck the encryption checkbox
+        self.method_combo.setCurrentIndex(0)  # Reset the method combo box to the first item
         print("Application reset")
 
     def uploadFile(self):
@@ -213,8 +216,16 @@ class Audio_Embedding_GUI(QWidget):
         print(f'Transforming file using {method} method')
         samples, sample_rate = self.load_audio(self.input_file)
 
+        # Define the base directory
+        base_directory = os.path.join(os.path.dirname(__file__), 'Generisani Audio File-ovi')
+
+        # Ensure the base directory exists
+        if not os.path.exists(base_directory):
+            os.makedirs(base_directory)
+
         # Generate unique output file name based on the method
         base_output_file = f'{method.lower()}_audio_file.wav'
+        output_file = os.path.join(base_directory, base_output_file)
 
         if self.encrypt_checkbox.isChecked():
             self.secret_message = self.text_crypto.txt_encrypt(self.secret_message)
@@ -226,14 +237,12 @@ class Audio_Embedding_GUI(QWidget):
         elif method == 'DCT':
             modified_samples = self.dct_embed(samples, self.secret_message)
 
-        output_file = base_output_file
         counter = 1
         while os.path.exists(output_file):
-            output_file = f'{os.path.splitext(base_output_file)[0]}_{counter}.wav'
+            output_file = os.path.join(base_directory, f'{os.path.splitext(base_output_file)[0]}_{counter}.wav')
             counter += 1
 
         self.output_file = output_file
-
         self.save_audio(modified_samples, sample_rate, self.output_file)
         self.output_path.setText(self.output_file)
         print(f'Transformed file saved as: {self.output_file}')

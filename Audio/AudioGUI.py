@@ -15,18 +15,8 @@ class Audio_GUI(QWidget):
 
         # Tab bar with mod options
         self.tab_bar = QTabBar()
-        self.tab_bar.addTab("Text")
-        self.tab_bar.addTab("Image")
-        audio_index = self.tab_bar.addTab("Audio")
-        self.tab_bar.addTab("Video")
-        self.tab_bar.currentChanged.connect(self.changeMod)
-        self.tab_bar.setCurrentIndex(audio_index)
-        layout.addWidget(self.tab_bar)
-
-        # Tab bar with mod options
-        self.tab_bar = QTabBar()
         self.tab_bar.addTab("Embedding")
-        self.tab_bar.addTab("Extract & Detect")
+        self.tab_bar.addTab("Extract or Detect")
         layout.addWidget(self.tab_bar)
 
         # Central widget for mod content

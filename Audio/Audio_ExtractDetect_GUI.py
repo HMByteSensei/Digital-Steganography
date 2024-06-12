@@ -218,7 +218,7 @@ class AudioExtractDetectGUI(QWidget):
         # Reset all fields and checkboxes related to extraction
         self.detection_result_label.setText('Extraction message will appear here.')
         self.encrypt_checkbox1.setChecked(False)
-        self.length_label.clear()
+        self.length_input.clear()
     def resetDetection(self):
         # Reset all fields and checkboxes related to detection
         self.detection_result_label.setText('Detection message will appear here.')
