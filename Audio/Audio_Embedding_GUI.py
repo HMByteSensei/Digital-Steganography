@@ -217,7 +217,7 @@ class Audio_Embedding_GUI(QWidget):
         samples, sample_rate = self.load_audio(self.input_file)
 
         # Define the base directory
-        base_directory = os.path.join(os.path.dirname(__file__), 'Generisani Audio File-ovi')
+        base_directory = os.path.join(os.path.dirname(__file__), 'Generated Audio files')
 
         # Ensure the base directory exists
         if not os.path.exists(base_directory):
