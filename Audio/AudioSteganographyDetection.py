@@ -5,6 +5,7 @@ from pydub import AudioSegment
 from Audio.AudioSteganographyDCT import dct_extract
 
 extraction_attempted = False
+Detection = 0
 def load_audio(file_path):
     audio = AudioSegment.from_wav(file_path)
     audio = audio.set_channels(1)  # Convert to mono
@@ -32,16 +33,21 @@ def binary_to_string(binary):
 
 def compare_codes(original_code, extracted_code):
     global extraction_attempted
+    global Detection
     print("Original author code:", original_code)
     print("Extracted author code:", extracted_code)
     if original_code == extracted_code:
         print("Embedded code matches the original author code.")
+        Detection = 1
     else:
         print("Embedded code doesn't match the original author code.")
+        Detection = 0
         if not extraction_attempted:
             extraction_attempted = True
             extracted_code = dct_extract(samples, len(original_author_code))
             compare_codes(original_author_code, extracted_code)
+
+    return Detection
 
 # Original author code
 original_author_code = "Nuclear"
@@ -56,4 +62,4 @@ samples, _ = load_audio(input_audio_path)
 extracted_code = extract_author_code(samples, len(original_author_code))
 
 # Compare with the original code
-compare_codes(original_author_code, extracted_code)
+result = compare_codes(original_author_code, extracted_code)
