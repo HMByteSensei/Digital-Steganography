@@ -1,9 +1,5 @@
-from PyQt5 import QtCore, QtGui, QtWidgets
-import sys, os
+from PyQt5 import QtCore
 from PyQt5 import QtWidgets
-from PyQt5.QtWidgets import QDialog, QApplication, QFileDialog, QMessageBox
-from Image.imageSteganography import imageSteganography
-
 
 class Ui_Dialog(object):
     def setupUi(self, Dialog):
@@ -19,6 +15,7 @@ class Ui_Dialog(object):
         self.comboBox = QtWidgets.QComboBox(Dialog)
         self.comboBox.setGeometry(QtCore.QRect(20, 110, 131, 22))
         self.comboBox.setObjectName("comboBox")
+        self.comboBox.addItem("")
         self.comboBox.addItem("")
         self.outputFileLabel = QtWidgets.QLabel(Dialog)
         self.outputFileLabel.setGeometry(QtCore.QRect(30, 230, 461, 21))
@@ -70,7 +67,8 @@ class Ui_Dialog(object):
         Dialog.setWindowTitle(_translate("Dialog", "Dialog"))
         self.searchFile.setText(_translate("Dialog", "Search"))
         self.comboBox.setItemText(0, _translate("Dialog", "LSB"))
-        self.outputFileLabel.setText(_translate("Dialog", "OutputFile.txt"))
+        self.comboBox.setItemText(1, _translate("Dialog", "DCT"))
+        self.outputFileLabel.setText(_translate("Dialog", "Name of the output file will be shown here"))
         self.label_2.setText(_translate("Dialog", "Encryption"))
         self.encryptionTrue.setText(_translate("Dialog", "True"))
         self.encryptionFalse.setText(_translate("Dialog", "False"))
@@ -78,84 +76,3 @@ class Ui_Dialog(object):
         self.stegTrue.setText(_translate("Dialog", "True"))
         self.stegFalse.setText(_translate("Dialog", "False"))
         self.pushButton.setText(_translate("Dialog", "Done"))
-
-class MainWindow(QDialog):
-    def __init__(self, parent=None):
-        super(MainWindow, self).__init__(parent)
-        self.ui = Ui_Dialog()
-        self.ui.setupUi(self)
-        self.ui.searchFile.clicked.connect(self.browsefiles)
-        self.ui.encryptionTrue.toggled.connect(self.handleRadioButton)
-        self.ui.encryptionFalse.toggled.connect(self.handleRadioButton)
-        self.ui.stegTrue.toggled.connect(self.handleRadioButton)
-        self.ui.stegFalse.toggled.connect(self.handleRadioButton)
-        self.ui.comboBox.currentIndexChanged.connect(self.handleComboBox)
-        self.ui.pushButton.clicked.connect(self.handleButtonClick)
-
-    def browsefiles(self):
-        try:
-            fname, _ = QtWidgets.QFileDialog.getOpenFileName(self, 'Open file', '', 'Image Files (*.png *.jpg *.jpeg *.bmp *.gif)')
-            if fname:
-                self.ui.filename.setText(fname)
-                directory = os.path.dirname(fname)
-                base_name = QtCore.QFileInfo(fname).completeBaseName()
-                extension = QtCore.QFileInfo(fname).suffix()
-                new_name = f"{base_name}Result.{extension}"
-                full_path = os.path.join(directory, new_name).replace("\\", "/")
-                self.ui.outputFileLabel.setText(full_path)
-                print(full_path)
-            else:
-                print("No file selected.")
-        except Exception as e:
-            print(f"Error while selecting file: {e}")
-
-    def handleRadioButton(self):
-        radioButton = self.sender()
-        if radioButton.isChecked():
-            print(f"Selected Radio Button: {radioButton.text()}")
-
-    def handleComboBox(self):
-        comboBox = self.sender()
-        currentText = comboBox.currentText()
-
-    def handleButtonClick(self):
-        try:
-            encRadio = False
-            stegRadio = True
-            if not self.ui.filename.text():
-                self.showMessageBox("Error", "No file selected.")
-                return
-
-            if self.ui.encryptionTrue.isChecked():
-                encRadio = True
-            elif self.ui.encryptionFalse.isChecked():
-                encRadio = False
-
-            if self.ui.stegTrue.isChecked():
-                stegRadio = True
-            elif self.ui.stegFalse.isChecked():
-                stegRadio = False
-
-            my = imageSteganography()
-            # print(self.ui.filename.text() + " " + self.ui.textEdit.toPlainText() + " " + combo + " " + str(encRadio) + " " + str(stegRadio))
-            stegRadio = not stegRadio
-            if my.engine(self.ui.filename.text(), self.ui.textEdit.toPlainText(), encRadio, stegRadio) is True:
-                self.showMessageBox("Information", "Operation was successful!")
-        except Exception as e:
-            print(f"Error in handleButtonClick: {e}")
-
-    def showMessageBox(self, title, message):
-        msg = QMessageBox()
-        msg.setIcon(QMessageBox.Warning)
-        msg.setWindowTitle(title)
-        msg.setText(message)
-        msg.exec_()
-
-if __name__ == "__main__":
-    import sys
-    app = QtWidgets.QApplication(sys.argv)
-    Dialog = MainWindow()
-    Dialog.setFixedWidth(520)
-    Dialog.setFixedHeight(440)
-    Dialog.show()
-    sys.exit(app.exec_())
