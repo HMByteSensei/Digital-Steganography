@@ -1,19 +1,31 @@
-# Text Steganography
+# Text Steganography Tool
 
-## Application User Guide
+## User Guide
+When you select the text steganography technique, the following window will appear:
 
-When you choose text technique you will get following window:
+![image](https://github.com/HMByteSensei/Steganografija/blob/main/UI%20Pictures/Text%20window.png?raw=true)
 
-![Screenshot (47).png](..%2F..%2F..%2F..%2FPictures%2FScreenshots%2FScreenshot%20%2847%29.png)
+### Instructions:
 
-To begin click the "Search" button after which you will be prompt to choose text file which serve as your cover text.
+1. **Start by Selecting a Cover Text File:**
+   - Click the **"Search"** button.
+   - Choose the text file that will serve as your cover text.
 
-Next select your preferred method with combo box.
+2. **Select Your Preferred Method:**
+   - Use the combo box to select your preferred steganography method.
 
-Radio buttons which are in "Encryption" section, indicate if you want to use encryption(True if you want to encrypt secret message before embeding it into text file).
+3. **Encryption Settings:**
+   - In the **"Encryption"** section, use the radio buttons to indicate if you want to encrypt the secret message before embedding it into the text file.
+     - **True:** Encrypt the secret message.
+     - **False:** Do not encrypt the secret message.
 
-In the "Steganography" section, use the radio buttons to specify whether data should be hidden in the text file (Steganography = True) or extracted from it (Steganography = False).
+4. **Steganography Settings:**
+   - In the **"Steganography"** section, use the radio buttons to specify the operation:
+     - **Steganography = True:** Hide data in the text file.
+     - **Steganography = False:** Extract data from the text file.
 
-Second text box is for you to write secret message which you want to hide.
+5. **Input Your Secret Message:**
+   - Enter the secret message you want to hide in the second text box.
 
-When you are finished press done which will generate a new text file with the name that is written in the label ("old_name" + "Result.txt").
+6. **Generate the Steganographic Text File:**
+   - Click **"Done"** to generate a new text file with the hidden message. The new file will be named as `old_nameResult.txt`.
